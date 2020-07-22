@@ -1,0 +1,60 @@
+{% include 'page-header', title: 'Cart' %}
+
+<section class="cart-area section">
+    <div class="cart shopping">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-2">
+                    <div class="block">
+                        <div class="product-list">
+                            <form method="post">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                            <th>Item Price</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for line_item in cart.items %}
+                                        <tr>
+                                            <td>
+                                                <div class="product-info">
+                                                    <img alt="" src="{{line_item.image | product_img_url: '1920x'}}"
+                                                        width="80">
+                                                    <a href="{{line_item.url}}">{{line_item.title}}</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="number" name="updates[]" class="btn btn-default"
+                                                    value="{{line_item.quantity}} min=" 0" pattern="[0-9]*">
+                                            </td>
+                                            <td>{{$200.00}}</td>
+                                            <td>
+                                                <a class="product-remove" href="">Remove</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="row justify-content-end cart-total">
+                                    <div class="col-md-2">
+                                        Total
+                                    </div>
+                                    <div class="col-md-2">
+                                        $500.00
+                                    </div>
+                                </div>
+                                <a class="btn btn-main pull-right" href="checkout.html">Checkout</a>
+                                <a class="btn btn-transparent pull-right" href="checkout.html"
+                                    id="update-btn">Update</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

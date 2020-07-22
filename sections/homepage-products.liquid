@@ -1,0 +1,78 @@
+<section class="products section bg-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="title text-center">
+          <h2>Trending Products</h2>
+        </div>
+      </div>
+
+      {% assign collection = collections[section.settings.collection] %}
+
+      <div class="row">
+        {% for product in collection.products limit: section.settings.product_limit %}
+        <div class="col-md-4">
+          <div class="product-item">
+            <div class="product-thumb">
+              {% if product.compare_at_price and product.compare_at_price != product.price %}
+              <span class="bage">Sale</span>
+              {% endif %}
+
+              <img class="img-responsive" src="{{product.featured_image.src | img_url: '1920x'}}">
+              <div class="preview-meta">
+                <ul>
+                  <li>
+                    <a href="{{product.url}}"><i class="fa fa-search"></i></a>
+                  </li>
+                  <li>
+                    <form action="/cart/add" id="form-{{product.handle}}" method="post">
+                      <input type="hidden" name="id" value="{{product.varients.first.id}}">
+                      <a oneclick="document.getElementById('form-{{product.handle}}').submit()"><i
+                          class="fa fa-shopping-cart"></i></a>
+                    </form>
+                    <a href="#"><i class="fa fa-heart-o"></i></a>
+                  </li>
+                  <li>
+                    <a href=""><i class="fa fa-shopping-cart"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="product-content">
+              <h4><a href="{{product.url}}">{{product.title}}</a></h4>
+              <p class="price">{{product.price | money }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+"name": "Homepage Products",
+"settings":[
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Trending Products"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+},
+{
+"type": "range",
+"id": "product_limit",
+"label": "Product Limit",
+"min": 3,
+"max": 9,
+"default": 6
+}
+]
+}
+{% endschema %}
