@@ -31,9 +31,17 @@
                         <a href="cart.html">
                             <i class="fa fa-shopping-cart"></i>Cart</a>
                     </li>
-                    <li class="list-inline-item">
-                        <a href="login.html">
-                            <i class="fa fa-sign-in"></i>Login</a>
+                    {% if shop.customer_accounts_enabled %}
+                        {% if customer %}
+                        <li class="list-inline-item">
+                            <a href="/account">
+                                <i class="fa fa-user"></i>Your Account</a>
+                        {% else %}    
+                            <li class="list-inline-item">
+                                <a href="/account">
+                                    <i class="fa fa-sign-out"></i>Sign Out</a>
+                            {% endif %}
+                        {% endif %}
                     </li>
                 </ul>
             </div>
