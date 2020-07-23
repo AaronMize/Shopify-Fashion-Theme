@@ -8,71 +8,78 @@
 
                 <div id="accordion">
                     {% for link in linklists[section.settings.category].links %}
-                    {% if link.links != blank %}
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5>
-                                <a aria-controls="collapseOne" aria-expanded="true"
-                                    data-target="#collapseOne-{{link.title}}" data-toggle="collapse" href="" class="{% if forloop.index != 1 %} collapsed                                      
-                                    {% endif %}">
-                                    {{link.title}}
-                                </a>
-                            </h5>
-                        </div>
+                        {% if link.links != blank %}
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5>
+                                        <a aria-controls="collapseOne" aria-expanded="true" data-target="#collapseOne-{{link.title}}" data-toggle="collapse" href="" class="{% if forloop.index != 1 %} collapsed {% endif %}">
+                                            {{link.title}}
+                                        </a>
+                                    </h5>
+                                </div>
 
-                        <div aria-labelledby="headingOne" class="collapse {% if forloop.first %} show                            
-                        {% endif %}" data-parent="#accordion" id="collapseOne-{{link.title}}">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    {% for childlink in link.links %}
-                                    <li><a href="{{childlink.url}}">{{childlink.title}}</a></li>
-                                    {% endfor %}
-                                </ul>
+                                <div aria-labelledby="headingOne" class="collapse {% if forloop.first %} show
+                                                            {% endif %}" data-parent="#accordion" id="collapseOne-{{link.title}}">
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            {% for childlink in link.links %}
+                                                <li>
+                                                    <a href="{{childlink.url}}">{{childlink.title}}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {% else %}
+                        {% else %}
 
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5>
-                                <a href="{{link.url}}" class="no-icon">{{link.title}}</a>
-                            </h5>
-                        </div>
-                        {% endif %}
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5>
+                                        <a href="{{link.url}}" class="no-icon">{{link.title}}</a>
+                                    </h5>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
 
-
                 <div class="col-md-9">
                     <div class="row">
                         {% for product in collection.products %}
-                        <div class="col-md-4">
-                            <div class="product-item">
-                                <div class="product-thumb">
-                                    {% if product.compare_at_price and product.compare_at_price != product.price %}
-                                    <span class="bage">Sale</span>
-                                    {% endif %}
+                            <div class="col-md-4">
+                                <div class="product-item">
+                                    <div class="product-thumb">
+                                        {% if product.compare_at_price and product.compare_at_price != product.price %}
+                                            <span class="bage">Sale</span>
+                                        {% endif %}
 
-                                    <img class="img-responsive" src="{{product.featured_image.src | img_url: '1920x'}}">
-                                    <div class="preview-meta">
-                                        <ul>
-                                            <li><a href="{{product.url}}"><i class="fa fa-search"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href=""><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                                        <img class="img-responsive" src="{{product.featured_image.src | img_url: '1920x'}}">
+                                        <div class="preview-meta">
+                                            <ul>
+                                                <li>
+                                                    <a href="{{product.url}}">
+                                                        <i class="fa fa-search"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <form action="/cart/add" id="form-{{product.handle}}" method="post">
+                                                <input type="hidden" name="id" value="{{product.varients.first.id}}">
+                                                <a oneclick="document.getElementById('form-{{product.handle}}').submit()">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="product-content">
+                                        <h4>
+                                            <a href="{{product.url}}">{{product.title}}</a>
+                                        </h4>
+                                        <p class="price">{{product.price | money }}</p>
                                     </div>
                                 </div>
-                                <div class="product-content">
-                                    <h4>
-                                        <a href="{{product.url}}">{{product.title}}</a>
-                                    </h4>
-                                    <p class="price">{{product.price | money }}</p>
-                                </div>
                             </div>
-                        </div>
                         {% endfor %}
                     </div>
                 </div>
